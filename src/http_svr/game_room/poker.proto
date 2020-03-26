@@ -1,0 +1,114 @@
+syntax = "proto3";//proto版本 3.x
+
+package PokerGame;
+
+enum PokerGameID 
+{
+    ERR_ID                   = 0 ;
+    HEART                    = 1 ;
+    CREATE_ROOM              = 2 ;
+    RES_CREATE_ROOM          = 3 ;
+    DELETE_ROOM              = 4 ;
+    RES_DELETE_ROOM          = 5 ;
+    JOIN_ROOM                = 6 ;
+    RES_JOIN_ROOM            = 7 ;
+    LEAVE_ROOM               = 8 ;
+    RES_LEAVE_ROOM           = 9 ;
+    START_GAME               = 10;
+    RES_START_GAME           = 11;
+    OVER_GAME                = 12;
+    RES_OVER_GAME            = 13;
+    DEAL_CARDS               = 14;
+    PLAY_CARDS               = 15;
+    RES_PLAY_CARDS           = 16;
+    FOLD_CARDS               = 17;
+    RES_FOLD_CARDS           = 18;
+    GET_CARDS                = 19;
+    RES_GET_CARDS            = 20;
+    CLEAR_PLAY_CARDS         = 21;
+    RES_CLEAR_PLAY_CARDS     = 22;
+    CONFIG_ROOM              = 23;
+    RES_CONFIG_ROOM          = 24;
+}
+
+enum RET_CODE
+{
+    DEFAULT     = 0;
+    SUCCESS     = 1;
+    ERR_REQUEST = 2;
+}
+
+message msg_package
+{
+    int32           id      = 1;
+    int32           user_id = 2;
+    int32           room_id = 3;
+    bytes           req_pkg = 4;
+    response        res_pkg = 5;
+}
+
+message response
+{
+    RET_CODE     ret = 1;
+    string     reson = 2;
+    bytes        pkg = 3;
+}
+
+message create_room
+{
+    int32           room_id   = 1;
+    room_conf       conf      = 2;
+}
+
+message room_conf
+{
+    bool            joker         = 1;
+    bool            dealer        = 2;
+    int32           players_num   = 3;
+    int32           pokers_num    = 4;
+    int32           type          = 5;
+    int32           deal_num      = 6;
+}
+
+message seats_info
+{
+    int32                    id = 1;
+    int32               user_id = 2;
+    string                hands = 3;
+    int32             hands_num = 4;
+    string           play_cards = 5; 
+}
+
+message game_info
+{
+    int32                 state = 1 ;
+    room_conf              conf = 2 ;
+    repeated seats_info   seats = 3 ;
+    string           comm_cards = 4 ;
+}
+
+message config_room
+{
+    room_conf     conf     = 1 ;
+}
+
+message play_cards
+{
+    string        cards    = 1 ;
+}
+
+message fold_cards
+{
+    string        cards    = 1 ;
+}
+
+message deal_cards
+{
+    string      cards  = 1 ;
+}
+
+message get_cards
+{
+    int32        num   = 1 ;
+    string      cards  = 2 ;
+}

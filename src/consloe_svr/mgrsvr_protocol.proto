@@ -1,0 +1,87 @@
+syntax = "proto3";//proto版本 3.x
+
+package mgr_svr;
+
+enum SEVER_TYPE
+{
+    ERROR_SVR = 0 ;
+    MGR_SVR   = 1 ;
+    GATE_SVR  = 2 ;
+    GAME_SVR  = 3 ;
+    LOGIN_SVR = 4 ;
+    DATA_SVR  = 5 ;
+    HTTP_SVR  = 6 ;
+    CTRL_SVR  = 7 ;
+}
+
+enum PROTOCOL_ID
+{
+    ERR_PRO    = 0 ;
+    HEART      = 1 ;
+    START      = 2 ;
+    RES_START  = 3 ;
+    STOP       = 4 ;
+    RES_STOP   = 5 ;
+    UPDATE     = 6 ;
+    RES_UPDATE = 7 ;
+    CMD        = 8 ;
+    RES_CMD    = 9 ;
+}
+
+enum REQ_ERROR
+{
+    ERR_REQ       = 0 ;
+    SUCCESS       = 1 ;
+    ERR_TYPE      = 2 ;
+    ERR_ID        = 3 ;
+    ERR_VERSION   = 4 ;
+    ERR_TIMEOUT   = 5 ;
+    ERR_LINK_NUM  = 6 ;
+    ERR_EXIST     = 7 ;
+    ERR_ALLOC     = 8 ;
+}
+
+enum CMD_TYPE
+{
+    ERR_CMD            = 0 ;
+    RESTART            = 1 ;
+    RECONF             = 2 ;
+    CLOSE_ALL_SVR      = 3 ;
+    CLOSE_SVR_BY_TYPE  = 4 ;
+    CLOSE_SVR_BY_ID    = 5 ;
+    TEST_CHAT          = 6 ;
+    STOP_SVR           = 7 ;
+}
+
+message PACKAGE
+{
+    int32          id      = 1 ;
+    int32          svr_id  = 2 ;
+    bytes         package  = 3 ; 
+}
+
+message START_SVR
+{
+    int32          type     = 1 ;
+    string          version = 2 ;
+    repeated int32 link_svr = 3 ;
+}
+
+message UPDATE_SVR
+{
+    int32          type     = 1 ;
+    string          version = 2 ;
+    repeated int32 link_svr = 3 ;
+}
+
+message CONSLOE_CMD
+{
+    int32          cmd_id   = 1 ;
+    bytes          context  = 2 ;
+}
+
+message RESPONSE
+{
+    REQ_ERROR         error = 1 ;
+    bytes           context = 2 ;        
+}
